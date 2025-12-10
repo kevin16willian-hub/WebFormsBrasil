@@ -289,4 +289,6 @@ app.use('/api', api);
 app.use('/forms-brasil/api', api);
 
 const port = process.env.PORT_BR || process.env.PORT || 3000;
-app.listen(port, () => console.log(`Brasil backend listening on ${port}`));
+app.listen(port, '0.0.0.0', () => 
+  console.log(`Brasil backend listening on ${port}`)
+);
