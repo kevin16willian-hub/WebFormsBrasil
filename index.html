@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Cadastro Fornecedor - Brasil</title>
+    <base href="/forms-brasil/">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Visual indication for missing fields */
+        .field-error {
+            outline: 2px solid #e74c3c !important;
+            background-color: #fff5f5 !important;
+        }
+        /* for radio labels */
+        label.field-error { color: #e74c3c !important; }
+        /* valid field indicator */
+        .field-valid { outline: 2px solid #2ecc71 !important; background-color: #f6fffa !important; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-banner"><h2>FORMULÁRIO DE SOLICITAÇÃO DE CADASTRO DE FORNECEDOR - NEODENT</h2></div>
+
+        <form id="brasilForm">
+            <div class="section">
+                <div class="section-header">DADOS DA EMPRESA</div>
+                <!-- Line: Nome -->
+                <div>
+                    <label>NOME:</label>
+                    <input type="text" name="nome">
+                </div>
+                <!-- Line: Endereço + Número -->
+                <div class="row">
+                    <div style="flex: 1 1 60%;">
+                        <label>ENDEREÇO:</label>
+                        <input type="text" name="endereco">
+                    </div>
+                    <div style="max-width:120px; margin-left:12px;">
+                        <label>NÚMERO:</label>
+                        <input type="text" name="Numero">
+                    </div>
+                </div>
+                <!-- Complemento / CEP / Bairro -->
+                <div class="row">
+                    <div>
+                        <label>COMPLEMENTO:</label>
+                        <input type="text" name="complemento">
+                    </div>
+                    <div style="max-width:160px;">
+                        <label>CEP:</label>
+                        <input type="text" name="cep" id="cep_input" placeholder="00000-000">
+                        <div id="cep_feedback" style="font-size:12px;margin-top:4px;color:#e74c3c;display:none;"></div>
+                    </div>
+                    <div>
+                        <label>BAIRRO:</label>
+                        <input type="text" name="bairro">
+                    </div>
+                </div>
+                <!-- Cidade / Estado -->
+                <div class="row">
+                    <div>
+                        <label>CIDADE:</label>
+                        <input type="text" name="cidade">
+                    </div>
+                    <div style="max-width:220px;">
+                        <label>ESTADO:</label>
+                        <input type="text" name="estado" id="estado_input" placeholder="SP">
+                        <div id="estado_feedback" style="font-size:12px;margin-top:4px;color:#e74c3c;display:none;"></div>
+                    </div>
+                </div>
+
+                <!-- Telefones / Pessoa contato / E-mails -->
+                <div class="row">
+                    <div>
+                        <label>TELEFONE 1:</label>
+                        <input type="text" name="telefone1" id="telefone1_input" placeholder="(00)00000-0000">
+                        <div id="telefone1_feedback" style="font-size:12px;margin-top:4px;color:#e74c3c;display:none;"></div>
+                    </div>
+                    <div>
+                        <label>TELEFONE 2:</label>
+                        <input type="text" name="telefone2" id="telefone2_input" placeholder="(00)00000-0000">
+                        <div id="telefone2_feedback" style="font-size:12px;margin-top:4px;color:#e74c3c;display:none;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <label>PESSOA DE CONTATO:</label>
+                        <input type="text" name="pessoa_contato">
+                    </div>
+                    <!-- Removed redundant TELEFONE field: we already have TELEFONE 1 and TELEFONE 2 -->
+                </div>
+
+                <div>
+                    <label>E-MAIL FISCAL:</label>
+                    <input type="email" name="email_fiscal" id="email_fiscal_input">
+                    <div id="email_fiscal_feedback" style="font-size:12px;margin-top:4px;color:#e74c3c;display:none;"></div>
+                </div>
+                <div>
+                    <label>E-MAIL FINANCEIRO:</label>
+                    <input type="email" name="email_financeiro" id="email_financeiro_input">
+                    <div id="email_financeiro_feedback" style="font-size:12px;margin-top:4px;color:#e74c3c;display:none;"></div>
+                </div>
+                <div>
+                    <label>E-MAIL DO RESPONSÁVEL PELO RECEBIMENTO DE PEDIDOS, ESPECIFICAÇÕES, DESENHOS,</label>
+                    <input type="email" name="email_responsavel" id="email_responsavel_input">
+                    <div id="email_responsavel_feedback" style="font-size:12px;margin-top:4px;color:#e74c3c;display:none;"></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">DADOS FINANCEIROS</div>
+                <div class="row">
+                    <div>
+                        <label>BANCO:</label>
+                        <select name="banco">
+                            <option value="">-- selecione --</option>
+                        </select>
+                    </div>
+                    <div style="max-width:160px;">
+                        <label>AGÊNCIA:</label>
+                        <input type="text" name="agencia" id="agencia_input">
+                        <div id="agencia_feedback" style="font-size:12px;margin-top:4px;color:#e74c3c;display:none;"></div>
+                    </div>
+                    <div style="max-width:200px;">
+                        <label>CONTA:</label>
+                        <input type="text" name="conta" id="conta_input">
+                        <div id="conta_feedback" style="font-size:12px;margin-top:4px;color:#666;display:none;"></div>
+                    </div>
+                </div>
+                <div class="notice-box">É necessário o envio do comprovante de dados bancários junto ao formulário.</div>
+                <div>
+                    <label>Upload comprovante bancário:</label>
+                    <input type="file" name="comprovante_bancario" accept=".pdf,.jpg,.png">
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">DADOS FISCAIS (FORNECEDOR PESSOA JURÍDICA)</div>
+                <div class="row">
+                    <div>
+                        <label>CNPJ:</label>
+                        <input type="text" name="cnpj" id="cnpj_input" placeholder="00.000.000/0000-00">
+                    </div>
+                    <div>
+                        <label>INSCRIÇÃO ESTADUAL:</label>
+                        <input type="text" name="inscricao_estadual">
+                    </div>
+                    <div></div>
+                </div>
+                <div>
+                    <label>INSCRIÇÃO MUNICIPAL:</label>
+                    <input type="text" name="inscricao_municipal">
+                </div>
+                <div style="margin-top:8px;">
+                    <label>CNAE DA ATIVIDADE:</label>
+                    <input type="text" name="cnae" id="cnae_input">
+                    <div id="cnae_feedback" style="font-size:12px;margin-top:4px;color:#e74c3c;display:none;"></div>
+                </div>
+
+                <div style="margin-top:8px;">
+                    <label>REGIME TRIBUTAÇÃO PIS/COFINS:</label>
+                    <div class="checkbox-row">
+                        <label><input type="radio" name="pis_cofins" value="cumulativo"> CUMULATIVO</label>
+                        <label><input type="radio" name="pis_cofins" value="nao_cumulativo"> NÃO CUMULATIVO</label>
+                    </div>
+                </div>
+
+                <div style="margin-top:8px;">
+                    <label>REGIME TRIBUTÁRIO:</label>
+                    <div class="checkbox-row">
+                        <label><input type="radio" name="regime_tributario" value="simples_nacional"> SIMPLES NACIONAL</label>
+                        <label><input type="radio" name="regime_tributario" value="lucro_real"> LUCRO REAL</label>
+                        <label><input type="radio" name="regime_tributario" value="lucro_presumido"> LUCRO PRESUMIDO</label>
+                        <label><input type="radio" name="regime_tributario" value="lucro_arbitrado"> LUCRO ARBITRADO</label>
+                    </div>
+                </div>
+
+                <div style="margin-top:8px;">
+                    <small>* Para contribuintes do Simples precisaremos de confirmação de faixa de faturamento para cálculo de compensação de ICMS.</small>
+                </div>
+
+                <div style="margin-top:8px;" class="checkbox-row">
+                    <label>Faixa de faturamento anual:</label>
+                    <label><input type="radio" name="faixa_faturamento" value="ate_180k"> ATÉ R$ 180.000,00</label>
+                    <label><input type="radio" name="faixa_faturamento" value="180k_360k"> DE R$ 180.001,00 A R$ 360.000,00</label>
+                    <label><input type="radio" name="faixa_faturamento" value="360k_720k"> DE R$ 360.001,00 A R$ 720.000,00</label>
+                    <label><input type="radio" name="faixa_faturamento" value="720k_1.8m"> DE R$ 720.001,00 A R$ 1.800.000,00</label>
+                </div>
+
+                <div style="margin-top:8px;">Serviços prestados pela sua empresa nos abrigam a reter quais impostos:</div>
+                <div class="checkbox-row">
+                    <label><input type="checkbox" name="irrf"> IRRF</label>
+                    <label><input type="checkbox" name="csll"> CSLL</label>
+                    <label><input type="checkbox" name="pis"> PIS</label>
+                    <label><input type="checkbox" name="cofins"> COFINS</label>
+                    <label><input type="checkbox" name="inss"> INSS</label>
+                    <label><input type="checkbox" name="iss"> ISS</label>
+                    <label><input type="checkbox" name="contribuicoes"> CONTRIBUIÇÕES</label>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">DADOS FISCAIS (FORNECEDOR PESSOA FÍSICA)</div>
+                <div>
+                    <label>CPF:</label>
+                    <input type="text" name="cpf" id="cpf_input" placeholder="000.000.000-00">
+                    <div id="cpf_feedback" style="font-size:12px;margin-top:4px;color:#e74c3c;display:none;"></div>
+                </div>
+                <div style="margin-top:8px;">Caso possua dependentes, selecione abaixo a quantidade:</div>
+                <div class="checkbox-row">
+                    <label><input type="radio" name="dependentes" value="1"> 1</label>
+                    <label><input type="radio" name="dependentes" value="2"> 2</label>
+                    <label><input type="radio" name="dependentes" value="3"> 3</label>
+                    <label><input type="radio" name="dependentes" value="4"> 4</label>
+                    <label><input type="radio" name="dependentes" value="5+"> 5 OU MAIS</label>
+                </div>
+            </div>
+
+            <div class="button-row">
+                <button type="button" onclick="submitBrasil()">Submeter</button>
+            </div>
+    </form>
+    </div>
+
+    <script>
+        function submitBrasil() {
+            const form = document.getElementById('brasilForm');
+
+            // Validate required fields (all except 'inscricao_estadual' and 'cnae')
+            const validation = validateBrazilForm(form);
+            if (!validation.ok) {
+                alert('Por favor preencha os campos obrigatórios:\n' + validation.message);
+                return;
+            }
+
+            // Build FormData to submit as multipart/form-data (safer for files)
+            const formData = new FormData();
+            for (let element of form.elements) {
+                if (!element.name) continue;
+
+                if (element.type === 'checkbox') {
+                    formData.append(element.name, element.checked ? '1' : '0');
+                } else if (element.type === 'radio') {
+                    if (element.checked) formData.append(element.name, element.value);
+                } else if (element.type === 'file') {
+                    if (element.files && element.files[0]) {
+                        formData.append(element.name, element.files[0]);
+                    }
+                } else {
+                    formData.append(element.name, element.value || '');
+                }
+            }
+
+            sendFormData(formData);
+        }
+
+        // Send FormData to the server (multipart upload). The server provides /api/submit-multipart
+        async function sendFormData(formData) {
+            const button = document.querySelector('.button-row button');
+            try {
+                if (button) { button.disabled = true; button.textContent = 'Enviando...'; }
+                const res = await fetch('/api/submit-multipart', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await res.json();
+                if (res.ok) {
+                    alert('Enviado com sucesso.');
+                    const form = document.getElementById('brasilForm');
+                    if (form) form.reset();
+                } else {
+                    alert('Erro no envio: ' + (result.error || res.statusText));
+                }
+            } catch (err) {
+                alert('Erro na requisição: ' + err.message);
+            } finally {
+                if (button) { button.disabled = false; button.textContent = 'Submeter'; }
+            }
+        }
+
+        // Validate that all inputs/selects/files/radio groups are filled except the exceptions
+        // This function returns an object { ok: boolean, message?: string }
+        function validateBrazilForm(form) {
+            // inscricao_estadual and inscricao_municipal are optional; CNAE is required
+            const exceptions = new Set(['inscricao_estadual', 'inscricao_municipal']);
+
+            // helper: resolve a human-friendly label/title for a field name
+            function getFieldTitleByName(fieldName) {
+                try {
+                    const els = form.querySelectorAll(`[name="${fieldName}"]`);
+                    if (!els || els.length === 0) return null;
+                    const el = els[0];
+
+                    // If this is a radio group, try to find a group label/heading instead of the first option's label
+                    if (el.type === 'radio') {
+                        // walk up and look for nearby text that looks like a group label
+                        let node = el.parentElement;
+                        for (let depth = 0; depth < 5 && node; depth++) {
+                            // check previous siblings of the current node for textual headings
+                            let prev = node.previousElementSibling;
+                            while (prev) {
+                                const txt = (prev.textContent || '').trim();
+                                if (txt) return txt;
+                                prev = prev.previousElementSibling;
+                            }
+                            // also check for a direct label element inside the parent (a common pattern)
+                            const lab = node.querySelector && node.querySelector('label');
+                            if (lab && lab.textContent && lab.textContent.trim()) return lab.textContent.trim();
+                            node = node.parentElement;
+                        }
+                        // as a fallback for grouped sections, look for a nearby .section-header
+                        const section = el.closest && el.closest('.section');
+                        if (section) {
+                            const sh = section.querySelector && section.querySelector('.section-header');
+                            if (sh && sh.textContent) return sh.textContent.trim();
+                        }
+                    }
+
+                    // prefer explicit <label for="id">
+                    if (el.id) {
+                        const lab = form.querySelector(`label[for="${el.id}"]`);
+                        if (lab && lab.textContent) return lab.textContent.trim();
+                    }
+                    // check parent or ancestor labels
+                    let parent = el.parentElement;
+                    for (let i = 0; i < 3 && parent; i++) {
+                        const lab = parent.querySelector && parent.querySelector('label');
+                        if (lab && lab.textContent) return lab.textContent.trim();
+                        parent = parent.parentElement;
+                    }
+                    // fallback: look for a label immediately preceding the element in DOM
+                    let prev = el.previousElementSibling;
+                    if (prev && prev.tagName === 'LABEL' && prev.textContent) return prev.textContent.trim();
+                    // final fallback: prettify the field name
+                    return fieldName.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                } catch (e) { return fieldName; }
+            }
+
+            const missingNames = []; // used to apply .field-error
+            const missingTitles = []; // used for the user-friendly message
+
+            // clear any previous visual error markers
+            const prev = form.querySelectorAll('.field-error');
+            prev.forEach(p => p.classList.remove('field-error'));
+
+            // collect radio group names to check once each
+            const radioNames = new Set();
+            for (let el of form.elements) {
+                if (!el.name) continue;
+                if (el.type === 'radio') radioNames.add(el.name);
+            }
+
+            // check radio groups
+            for (let name of radioNames) {
+                if (exceptions.has(name)) continue;
+                const radios = form.querySelectorAll(`input[type="radio"][name="${name}"]`);
+                let checked = false;
+                radios.forEach(r => { if (r.checked) checked = true; });
+                if (!checked) {
+                    missingNames.push(name);
+                    missingTitles.push((getFieldTitleByName(name) || name) + ' (selecione uma opção)');
+                }
+            }
+
+            for (let el of form.elements) {
+                if (!el.name) continue;
+                if (exceptions.has(el.name)) continue;
+
+                // skip radio here (already checked)
+                if (el.type === 'radio') continue;
+
+                // skip tax checkboxes (they are optional): these are names: irrf, csll, pis, cofins, inss, iss, contribuicoes
+                if (el.type === 'checkbox' && ['irrf','csll','pis','cofins','inss','iss','contribuicoes'].includes(el.name)) continue;
+
+                if (el.type === 'file') {
+                    if (!el.files || el.files.length === 0) {
+                        missingNames.push(el.name);
+                        missingTitles.push((getFieldTitleByName(el.name) || el.name) + ' (arquivo)');
+                    }
+                    continue;
+                }
+
+                // selects and text/email inputs
+                if (el.tagName === 'SELECT' || el.type === 'text' || el.type === 'email' || el.type === 'number' || el.type === 'tel') {
+                    const val = (el.value || '').toString().trim();
+                    if (!val) {
+                        missingNames.push(el.name);
+                        missingTitles.push(getFieldTitleByName(el.name) || el.name);
+                    }
+                }
+            }
+
+            // Additional business validation: if a bank is selected and it has a 'chave',
+            // ensure the last digit of the conta matches the chave. If it doesn't, prevent submit
+            try {
+                const bancoSelect = form.querySelector('select[name="banco"]');
+                const contaEl = form.querySelector('[name="conta"]');
+                if (bancoSelect && contaEl) {
+                    const selected = bancoSelect.options[bancoSelect.selectedIndex];
+                    const chave = selected ? selected.getAttribute('data-chave') : null;
+                    const contaDigits = (contaEl.value || '').toString().replace(/\D/g, '');
+                    if (chave && contaDigits) {
+                        const last = contaDigits.slice(-1);
+                        if (String(last) !== String(chave)) {
+                            missingNames.push('conta');
+                            missingTitles.push((getFieldTitleByName('conta') || 'Conta') + ' (dígito inválido)');
+                        }
+                    }
+                }
+            } catch (e) { /* ignore validation errors here */ }
+
+            if (missingNames.length) {
+                // apply visual markers to the actual form controls
+                applyFieldErrors(form, missingNames);
+                return { ok: false, message: missingTitles.join('\n') };
+            }
+            return { ok: true };
+        }
+
+        // Add .field-error class to the named controls (handles radio groups and regular inputs/selects/files)
+        function applyFieldErrors(form, missingList) {
+            missingList.forEach(item => {
+                // item can be like 'nome' or 'groupName (selecione uma opção)' or 'comprovante_bancario (arquivo)'
+                const name = item.split(' ')[0];
+                const els = form.querySelectorAll(`[name="${name}"]`);
+                if (!els || els.length === 0) return;
+                els.forEach(el => {
+                    if (el.type === 'radio') {
+                        // mark the label(s) that wrap the radio inputs
+                        const radios = form.querySelectorAll(`input[type="radio"][name="${name}"]`);
+                        radios.forEach(r => {
+                            const lab = r.closest('label') || r.parentElement;
+                            if (lab) lab.classList.add('field-error');
+                        });
+                    } else {
+                        el.classList.add('field-error');
+                        try {
+                            const id = el.id;
+                            if (id) {
+                                const lab = form.querySelector(`label[for="${id}"]`);
+                                if (lab) lab.classList.add('field-error');
+                            }
+                        } catch (e) { /* ignore */ }
+                    }
+                });
+            });
+        }
+
+        function attachAutoClearValidation(form) {
+            if (!form) return;
+            for (let el of form.elements) {
+                if (!el.name) continue;
+
+                const clearIfValid = (control) => {
+                    if (control.type === 'radio') {
+                        const radios = form.querySelectorAll(`input[type="radio"][name="${control.name}"]`);
+                        let any = false;
+                        radios.forEach(r => { if (r.checked) any = true; });
+                        if (any) {
+                            radios.forEach(r => {
+                                const lab = r.closest('label') || r.parentElement;
+                                if (lab) lab.classList.remove('field-error');
+                                r.classList.remove('field-error');
+                            });
+                        }
+                    } else if (control.type === 'file') {
+                        if (control.files && control.files.length > 0) control.classList.remove('field-error');
+                    } else if (control.tagName === 'SELECT') {
+                        if ((control.value || '').toString().trim()) control.classList.remove('field-error');
+                    } else if (control.type === 'checkbox') {
+                        if (!['irrf','csll','pis','cofins','inss','iss','contribuicoes'].includes(control.name)) {
+                            control.classList.remove('field-error');
+                        } else {
+                        }
+                    } else {
+                        if ((control.value || '').toString().trim()) control.classList.remove('field-error');
+                    }
+                };
+
+                if (el.type === 'text' || el.type === 'email' || el.type === 'number' || el.type === 'tel' || el.tagName === 'TEXTAREA') {
+                    el.addEventListener('input', () => clearIfValid(el));
+                } else {
+                    el.addEventListener('change', () => clearIfValid(el));
+                }
+            }
+        }
+
+        async function sendPayload(data) {
+            const button = document.querySelector('.button-row button');
+            try {
+                if (button) { button.disabled = true; button.textContent = 'Enviando...'; }
+                const res = await fetch('/api/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                if (res.ok) {
+                    alert('Enviado com sucesso.');
+                    const form = document.getElementById('brasilForm');
+                    if (form) form.reset();
+                } else {
+                    alert('Erro no envio: ' + (result.error || res.statusText));
+                }
+            } catch (err) {
+                alert('Erro na requisição: ' + err.message);
+            } finally {
+                if (button) { button.disabled = false; button.textContent = 'Submeter'; }
+            }
+        }
+
+        (function () {
+            function onlyDigits(s) { return (s || '').replace(/\D/g, ''); }
+
+            function formatCNPJ(value) {
+                const v = onlyDigits(value).slice(0,14);
+                let out = v;
+                if (v.length > 12) out = v.slice(0,2) + '.' + v.slice(2,5) + '.' + v.slice(5,8) + '/' + v.slice(8,12) + '-' + v.slice(12);
+                else if (v.length > 8) out = v.slice(0,2) + '.' + v.slice(2,5) + '.' + v.slice(5,8) + '/' + v.slice(8);
+                else if (v.length > 5) out = v.slice(0,2) + '.' + v.slice(2,5) + '.' + v.slice(5);
+                else if (v.length > 2) out = v.slice(0,2) + '.' + v.slice(2);
+                return out;
+            }
+
+            async function buscarCNPJ(cnpjRaw) {
+                const cnpj = onlyDigits(cnpjRaw);
+                if (cnpj.length !== 14) return { error: 'CNPJ inválido' };
+                const url = `/api/sintegra?cnpj=${cnpj}`;
+                try {
+                    const resp = await fetch(url);
+                    if (!resp.ok) return { error: 'Erro na consulta (proxy)' };
+                    const json = await resp.json();
+                    if (json.code && json.code !== '0') return { error: 'Resposta com erro' };
+                    return json;
+                } catch (err) {
+                    return { error: 'Falha na requisição (proxy)' };
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const cepEl = document.querySelector('[name="cep"]');
+                if (!cepEl) return;
+                cepEl.addEventListener('input', (e) => {
+                    const only = onlyDigits(e.target.value).slice(0, 8);
+                    if (only.length > 5) {
+                        e.target.value = only.slice(0, 5) + '-' + only.slice(5);
+                    } else {
+                        e.target.value = only;
+                    }
+                });
+
+                // Phone formatting for TELEFONE 1 and TELEFONE 2: format while typing
+                const tel1El = document.getElementById('telefone1_input');
+                const tel2El = document.getElementById('telefone2_input');
+                function formatPhoneInput(e) {
+                    const el = e.target;
+                    if (!el) return;
+                    let digits = (el.value || '').toString().replace(/\D/g, '').slice(0, 11); // max 11 (DDD + 9)
+                    if (digits.length === 0) { el.value = ''; return; }
+                    if (digits.length <= 2) {
+                        el.value = '(' + digits;
+                        return;
+                    }
+                    // build formatted string
+                    let ddd = digits.slice(0,2);
+                    let rest = digits.slice(2);
+                    let formatted = '(' + ddd + ')';
+                    if (rest.length <= 4) {
+                        formatted += rest;
+                    } else if (rest.length <= 7) {
+                        // for total length 6..9 -> (DD)NNNN-NNN
+                        formatted += rest.slice(0, rest.length - 4) + '-' + rest.slice(rest.length - 4);
+                    } else {
+                        // 9 digits (typical mobile): split 5-4
+                        formatted += rest.slice(0, rest.length - 4) + '-' + rest.slice(rest.length - 4);
+                    }
+                    el.value = formatted;
+                    // move caret to end (simple approach)
+                    try { el.selectionStart = el.selectionEnd = el.value.length; } catch (e) { /* ignore */ }
+                }
+                if (tel1El) tel1El.addEventListener('input', formatPhoneInput);
+                if (tel2El) tel2El.addEventListener('input', formatPhoneInput);
+
+                const cnpjEl = document.getElementById('cnpj_input');
+                if (cnpjEl) {
+                    cnpjEl.addEventListener('input', (e) => { e.target.value = formatCNPJ(e.target.value); });
+                    cnpjEl.addEventListener('blur', async (e) => {
+                        const res = await buscarCNPJ(e.target.value);
+                        if (res.error) {
+                            console.warn('Sintegra:', res.error);
+                            return;
+                        }
+                        // fill address fields
+                        const enderecoInput = document.querySelector('[name="endereco"]');
+                        const numeroInput = document.querySelector('[name="Numero"]');
+                        const complementoInput = document.querySelector('[name="complemento"]');
+                        const bairroInput = document.querySelector('[name="bairro"]');
+                        const cidadeInput = document.querySelector('[name="cidade"]');
+                        const estadoInput = document.querySelector('[name="estado"]');
+                        const cnaeInput = document.querySelector('[name="cnae"]');
+                        if (enderecoInput) enderecoInput.value = res.logradouro || '';
+                        if (numeroInput) numeroInput.value = res.numero || '';
+                        if (complementoInput) complementoInput.value = res.complemento || '';
+                        if (bairroInput) bairroInput.value = res.bairro || '';
+                        if (cidadeInput) cidadeInput.value = res.municipio || '';
+                        if (estadoInput) estadoInput.value = res.uf || '';
+                        if (cnaeInput && res.atividade_principal && res.atividade_principal[0]) cnaeInput.value = res.atividade_principal[0].code || res.atividade_principal[0].text || '';
+                    });
+                }
+                // attach auto-clear validation so .field-error is removed as user fills fields
+                const brasilForm = document.getElementById('brasilForm');
+                if (brasilForm) attachAutoClearValidation(brasilForm);
+
+                // Populate banco dropdown from backend and wire conta validation
+                (async function loadBancosAndWireValidation() {
+                    try {
+                        const resp = await fetch('/api/bancos');
+                        if (!resp.ok) {
+                            console.warn('Falha ao carregar bancos:', resp.status);
+                            return;
+                        }
+                        const bancos = await resp.json();
+                        const bancoSelect = document.querySelector('select[name="banco"]');
+                        if (!bancoSelect) return;
+                        // clear existing (except placeholder)
+                        bancoSelect.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
+                        bancos.forEach(b => {
+                            const opt = document.createElement('option');
+                            // keep numeric code as value and store chave as data attribute
+                            opt.value = b.numero || '';
+                            opt.textContent = (b.numero ? b.numero + ' - ' : '') + (b.nome || '');
+                            if (b.chave !== undefined && b.chave !== null) opt.setAttribute('data-chave', String(b.chave));
+                            bancoSelect.appendChild(opt);
+                        });
+
+                        const contaInput = document.getElementById('conta_input');
+                        const feedback = document.getElementById('conta_feedback');
+
+                        function onlyDigits(s) { return (s || '').toString().replace(/\D/g, ''); }
+
+                        function validateConta() {
+                            if (!contaInput) return;
+                            const val = onlyDigits(contaInput.value);
+                            const selected = bancoSelect.options[bancoSelect.selectedIndex];
+                            const chave = selected ? selected.getAttribute('data-chave') : null;
+                            if (!val) {
+                                // empty: clear markers
+                                contaInput.classList.remove('field-error');
+                                contaInput.classList.remove('field-valid');
+                                if (feedback) { feedback.style.display = 'none'; feedback.textContent = ''; }
+                                return;
+                            }
+                            if (!chave) {
+                                // no chave available: cannot validate
+                                contaInput.classList.remove('field-error');
+                                contaInput.classList.remove('field-valid');
+                                if (feedback) { feedback.style.display = 'block'; feedback.style.color = '#666'; feedback.textContent = 'Banco selecionado não possui chave para validação.'; }
+                                return;
+                            }
+                            const last = val.slice(-1);
+                            if (String(last) === String(chave)) {
+                                // valid: remove any previous error marker and hide feedback
+                                contaInput.classList.remove('field-error');
+                                contaInput.classList.remove('field-valid');
+                                if (feedback) { feedback.style.display = 'none'; feedback.textContent = ''; }
+                            } else {
+                                // invalid: mark and show a single error message
+                                contaInput.classList.remove('field-valid');
+                                contaInput.classList.add('field-error');
+                                if (feedback) { feedback.style.display = 'block'; feedback.style.color = '#e74c3c'; feedback.textContent = 'Último dígito NÃO corresponde à chave do banco (esperado: ' + chave + ').'; }
+                            }
+                        }
+
+                        if (contaInput) {
+                            // while typing: format by inserting a dash before the last digit
+                            contaInput.addEventListener('input', (e) => {
+                                const cur = onlyDigits(e.target.value);
+                                let formatted = cur;
+                                if (cur.length > 1) formatted = cur.slice(0, -1) + '-' + cur.slice(-1);
+                                // set value and keep caret at end
+                                e.target.value = formatted;
+                            });
+
+                            // validate when the user leaves the field (finished typing) or when bank changes
+                            contaInput.addEventListener('blur', validateConta);
+                            bancoSelect.addEventListener('change', validateConta);
+                        }
+                    } catch (err) {
+                        console.warn('Erro carregando bancos:', err);
+                    }
+                })();
+
+                // --- Additional live validators (validate on blur/change) ---
+                (function attachLiveValidators() {
+                    try {
+                        const cepInput = document.getElementById('cep_input');
+                        const cepFb = document.getElementById('cep_feedback');
+                        const estadoInput = document.getElementById('estado_input');
+                        const estadoFb = document.getElementById('estado_feedback');
+                        const tel1 = document.getElementById('telefone1_input');
+                        const tel1Fb = document.getElementById('telefone1_feedback');
+                        const tel2 = document.getElementById('telefone2_input');
+                        const tel2Fb = document.getElementById('telefone2_feedback');
+                        const emailFiscal = document.getElementById('email_fiscal_input');
+                        const emailFiscalFb = document.getElementById('email_fiscal_feedback');
+                        const emailFinance = document.getElementById('email_financeiro_input');
+                        const emailFinanceFb = document.getElementById('email_financeiro_feedback');
+                        const emailResp = document.getElementById('email_responsavel_input');
+                        const emailRespFb = document.getElementById('email_responsavel_feedback');
+                        const agencia = document.getElementById('agencia_input');
+                        const agenciaFb = document.getElementById('agencia_feedback');
+                        const cpf = document.getElementById('cpf_input');
+                        const cpfFb = document.getElementById('cpf_feedback');
+                        const cnae = document.getElementById('cnae_input');
+                        const cnaeFb = document.getElementById('cnae_feedback');
+
+                        const states = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+
+                        function showError(el, fbEl, msg) {
+                            if (!el) return;
+                            el.classList.add('field-error');
+                            if (fbEl) { fbEl.style.display = 'block'; fbEl.style.color = '#e74c3c'; fbEl.textContent = msg; }
+                        }
+                        function clearError(el, fbEl) {
+                            if (!el) return;
+                            el.classList.remove('field-error');
+                            if (fbEl) { fbEl.style.display = 'none'; fbEl.textContent = ''; }
+                        }
+
+                        function isValidCEPFormat(v) {
+                            if (!v) return false;
+                            return /^\d{5}-?\d{3}$/.test(v);
+                        }
+
+                        function isValidState(sig) {
+                            if (!sig) return false;
+                            return states.includes(sig.toUpperCase());
+                        }
+
+                        function isValidPhone(v) {
+                            const d = (v||'').toString().replace(/\D/g,'');
+                            return d.length === 10 || d.length === 11;
+                        }
+
+                        function isValidEmail(v) {
+                            if (!v) return false;
+                            // simple email regex
+                            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+                        }
+
+                        function isValidAgencia(v) {
+                            const d = (v||'').toString().replace(/\D/g,'');
+                            return d.length >= 3 && d.length <= 6;
+                        }
+
+                        function isValidCPF(v) {
+                            if (!v) return false;
+                            const s = (v||'').toString().replace(/\D/g,'');
+                            if (s.length !== 11) return false;
+                            if (/^(\d)\1+$/.test(s)) return false; // all digits same
+                            const calc = (arr, factor) => {
+                                let total = 0;
+                                for (let i = 0; i < arr.length; i++) total += parseInt(arr[i],10) * (factor - i);
+                                const res = (total * 10) % 11;
+                                return res === 10 ? 0 : res;
+                            };
+                            const arr = s.split('');
+                            const dv1 = calc(arr.slice(0,9), 10);
+                            const dv2 = calc(arr.slice(0,10), 11);
+                            return dv1 === parseInt(arr[9],10) && dv2 === parseInt(arr[10],10);
+                        }
+
+                        if (cepInput) {
+                            cepInput.addEventListener('blur', () => {
+                                const v = (cepInput.value||'').trim();
+                                if (!v) { clearError(cepInput, cepFb); return; }
+                                if (!isValidCEPFormat(v)) showError(cepInput, cepFb, 'Formato CEP inválido. Use 00000-000'); else clearError(cepInput, cepFb);
+                            });
+                        }
+
+                        if (estadoInput) {
+                            estadoInput.addEventListener('blur', () => {
+                                const v = (estadoInput.value||'').trim();
+                                if (!v) { showError(estadoInput, estadoFb, 'Estado obrigatório'); return; }
+                                if (!isValidState(v)) showError(estadoInput, estadoFb, 'Sigla de estado inválida (ex: SP)'); else clearError(estadoInput, estadoFb);
+                            });
+                        }
+
+                        if (tel1) tel1.addEventListener('blur', () => { const v=(tel1.value||'').trim(); if (!v) { showError(tel1, tel1Fb, 'Telefone 1 obrigatório'); } else if (!isValidPhone(v)) showError(tel1, tel1Fb, 'Formato esperado: (NN)NNNNN-NNNN'); else clearError(tel1, tel1Fb); });
+                        if (tel2) tel2.addEventListener('blur', () => { const v=(tel2.value||'').trim(); if (!v) { clearError(tel2, tel2Fb); } else if (!isValidPhone(v)) showError(tel2, tel2Fb, 'Formato esperado: (NN)NNNNN-NNNN'); else clearError(tel2, tel2Fb); });
+
+                        if (emailFiscal) emailFiscal.addEventListener('blur', () => { const v=(emailFiscal.value||'').trim(); if (!v) showError(emailFiscal, emailFiscalFb, 'E-mail fiscal obrigatório'); else if (!isValidEmail(v)) showError(emailFiscal, emailFiscalFb, 'Formato de e-mail inválido'); else clearError(emailFiscal, emailFiscalFb); });
+                        if (emailFinance) emailFinance.addEventListener('blur', () => { const v=(emailFinance.value||'').trim(); if (!v) showError(emailFinance, emailFinanceFb, 'E-mail financeiro obrigatório'); else if (!isValidEmail(v)) showError(emailFinance, emailFinanceFb, 'Formato de e-mail inválido'); else clearError(emailFinance, emailFinanceFb); });
+                        if (emailResp) emailResp.addEventListener('blur', () => { const v=(emailResp.value||'').trim(); if (!v) showError(emailResp, emailRespFb, 'E-mail responsável obrigatório'); else if (!isValidEmail(v)) showError(emailResp, emailRespFb, 'Formato de e-mail inválido'); else clearError(emailResp, emailRespFb); });
+
+                        if (agencia) agencia.addEventListener('blur', () => { const v=(agencia.value||'').trim(); if (!v) showError(agencia, agenciaFb, 'Agência obrigatória'); else if (!isValidAgencia(v)) showError(agencia, agenciaFb, 'Agência: 3 a 6 dígitos'); else clearError(agencia, agenciaFb); });
+
+                        if (cpf) cpf.addEventListener('blur', () => { const v=(cpf.value||'').trim(); if (!v) { clearError(cpf, cpfFb); return; } if (!isValidCPF(v)) showError(cpf, cpfFb, 'CPF inválido'); else clearError(cpf, cpfFb); });
+
+                        // CNAE is required now
+                        if (cnae) cnae.addEventListener('blur', () => { const v=(cnae.value||'').trim(); if (!v) showError(cnae, cnaeFb, 'CNAE obrigatório'); else clearError(cnae, cnaeFb); });
+
+                    } catch (err) {
+                        console.warn('Erro attachLiveValidators:', err);
+                    }
+                })();
+            });
+        })();
+    </script>
+</body>
+</html>
