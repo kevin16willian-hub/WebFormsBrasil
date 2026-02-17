@@ -5,35 +5,19 @@ const sql = require('mssql');
 const multer = require('multer');
 const { body, validationResult } = require('express-validator');
 
-// fetch fallback for older Node
-if (typeof fetch === 'undefined') {
-  try {
-    globalThis.fetch = (...args) => import('node-fetch').then(mod => mod.default(...args));
-  } catch (e) {
-    console.warn('Global fetch not available; will attempt to lazy-load node-fetch when needed.');
-  }
-}
-
 const app = express();
 app.use(bodyParser.json({ limit: '25mb' }));
 
+// For fetch API and other JSON requests
 const path = require('path');
 
-// Serve static files (index.html and assets) from project root
-app.use(express.static(path.join(__dirname)));
-
-// Explicit root route to ensure index is served
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-
-// Also serve the app under the /forms-brasil prefix (static files and SPA entry)
-app.use('/forms-brasil', express.static(path.join(__dirname)));
-app.get('/forms-brasil', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-app.get('/forms-brasil/*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-
-// API router (mount under /api and /forms-brasil/api so the app works both at root and behind a prefix)
+// For fetch API
 const api = express.Router();
 
-// DB config (shared style, read from .env)
+// For file uploads (multipart/form-data)
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
+
+// Database configuration from environment variables
 const dbConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -44,6 +28,23 @@ const dbConfig = {
     trustServerCertificate: process.env.DB_TRUST_CERT === 'true'
   }
 };
+
+// Serve static files (index.html and assets) from project root
+app.use(express.static(path.join(__dirname)));
+
+app.use('/forms-brasil', express.static(path.join(__dirname)));
+
+// mount api router at both root and prefix so the front-end works under /forms-brasil
+app.use('/api', api);
+app.use('/forms-brasil/api', api);
+
+// Explicit root route to ensure index is served
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+
+// Also serve the app under the /forms-brasil prefix (static files and SPA entry)
+
+app.get('/forms-brasil', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+app.get('/forms-brasil/*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 // /api/submit - accept JSON (legacy) but avoid logging base64
 api.post('/submit', async (req, res) => {
@@ -124,9 +125,6 @@ api.post('/submit', async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
-
-// Multer for multipart uploads
-const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
 
 api.post('/submit-multipart',
   upload.single('comprovante_bancario'),
@@ -284,11 +282,7 @@ api.get('/bancos', async (req, res) => {
   }
 });
 
-// mount api router at both root and prefix so the front-end works under /forms-brasil
-app.use('/api', api);
-app.use('/forms-brasil/api', api);
-
-const port = process.env.PORT_BR || process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', () => 
   console.log(`Brasil backend listening on ${port}`)
 );
